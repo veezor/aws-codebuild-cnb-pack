@@ -68,7 +68,7 @@ fi
 
 release_arn=$(cat .releasearn)
 if [[ $deploy_process_type != "scheduledtasks" && ( -z "$ECS_SERVICE_TASK_PROCESSES" || $ECS_SERVICE_TASK_PROCESSES =~ $deploy_process_type ) ]]; then
-	if [[ $deploy_process_type = "web" || "$provision_process_type" =~ ^web[1-9] ]]; then
+	if [[ $deploy_process_type = "web" || "$deploy_process_type" =~ ^web[1-9] ]]; then
 		provision_target_group_arn=$(cat .tgarn)
 	fi
 
@@ -101,7 +101,7 @@ if [[ $deploy_process_type != "scheduledtasks" && ( -z "$ECS_SERVICE_TASK_PROCES
 		--deployment-configuration "maximumPercent=200,minimumHealthyPercent=100,deploymentCircuitBreaker={$DEPLOYMENT_CIRCUIT_BREAKER_RULE}" \
 		--propagate-tags TASK_DEFINITION \
 		--tags $deploy_json_workload_resource_tags \
-        $( [ "$deploy_process_type" = "web" || "$provision_process_type" =~ ^web[1-9] ] && echo "--load-balancers targetGroupArn=$provision_target_group_arn,containerName=$deploy_repository_slug,containerPort=$PORT")
+        $( [ "$deploy_process_type" = "web" || "$deploy_process_type" =~ ^web[1-9] ] && echo "--load-balancers targetGroupArn=$provision_target_group_arn,containerName=$deploy_repository_slug,containerPort=$PORT")
 		)
 		echo "----> First deployment of $release_arn with $deploy_desired_count task(s) in progress on ECS..."
 	else
