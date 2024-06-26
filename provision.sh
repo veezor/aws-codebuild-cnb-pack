@@ -139,7 +139,6 @@ fi
 if [[ "$provision_process_type" =~ ^web[1-9] ]]; then
     provision_alb_name=$provision_repository_slug-$provision_branch_name
     provision_alb_exists=$(aws elbv2 describe-load-balancers --name ${provision_alb_name:0:32} || echo false)
-    #provision_alb_arn=$(jq --raw-output '.LoadBalancers[].LoadBalancerArn' <<<$provision_alb_exists)
     if [ "$provision_alb_exists" = false ]; then
         provision_alb_subnets=$(jq --raw-input --raw-output 'split(",") | join(" ")' <<<"$ALB_SUBNETS")
         provision_alb_security_groups=$(jq --raw-input --raw-output 'split(",") | join(" ")' <<<"$ALB_SECURITY_GROUPS")
