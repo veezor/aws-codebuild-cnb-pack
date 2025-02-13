@@ -1,6 +1,16 @@
 #!/bin/bash
 set -eo pipefail
 
+if [ ! -z "$MAESTRO_DEBUG" ]; then
+    set -x
+fi
+
+# if folder does not exist create it
+if [ ! -d "/sys/fs/cgroup/systemd" ]; then
+    mkdir -p /sys/fs/cgroup/systemd
+    ls -la /sys/fs/cgroup/systemd
+fi
+
 if [ ! -z "$MAESTRO_REPO_OVERRIDE" ]; then
     REPO_SLUG=$MAESTRO_REPO_OVERRIDE
 fi

@@ -80,7 +80,7 @@ RUN ARCH=$(uname -m) \
 
 FROM tools AS runtimes
 
-#Docker 19
+#Docker 27
 ENV DOCKER_BUCKET="download.docker.com" \
     DOCKER_CHANNEL="stable" \
     DIND_COMMIT="3b5fac462d21ca164b3778647420016315289034" \
